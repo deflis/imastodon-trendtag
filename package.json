@@ -1,0 +1,40 @@
+{
+    "name": "trendtag",
+    "version": "1.0.0",
+    "main": "index.js",
+    "license": "MIT",
+    "dependencies": {
+        "@types/emojione": "^2.2.1",
+        "@types/react": "^15.6.6",
+        "@types/react-dom": "^16.0.2",
+        "axios": "^0.16.2",
+        "bootstrap": "^4.0.0-alpha.6",
+        "emojione": "2.2.7",
+        "moment": "^2.18.1",
+        "react": "^16.0.0",
+        "react-dom": "^16.0.0"
+    },
+    "devDependencies": {
+        "buble-loader": "^0.4.1",
+        "css-loader": "^0.28.4",
+        "node-sass": "^4.5.3",
+        "npm-run-all": "^4.0.2",
+        "sass-loader": "^6.0.6",
+        "source-map-loader": "^0.2.1",
+        "style-loader": "^0.18.2",
+        "ts-loader": "^2.3.1",
+        "typescript": "^2.4.1",
+        "html-webpack-plugin": "^2.29.0",
+        "uglifyjs-webpack-plugin3": "^1.0.0-beta",
+        "webpack": "^3.3.0",
+        "webpack-dev-server": "^2.6.1"
+    },
+    "scripts": {
+        "build": "npm-run-all build:webpack",
+        "build:webpack": "webpack --config webpack.config.js",
+        "watch": "npm-run-all watch:serve",
+        "watch:webpack": "webpack --config webpack.config.js -w",
+        "watch:serve": "webpack-dev-server --config webpack.config.js",
+        "publish:build": "NODE_ENV=production webpack --config webpack.config.js"
+    }
+}
