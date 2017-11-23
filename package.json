@@ -2,7 +2,7 @@
     "name": "trendtag",
     "version": "1.0.0",
     "main": "index.js",
-    "license": "MIT",
+    "license": "AGPLv3",
     "private": true,
     "dependencies": {
         "axios": "^0.16.2",
