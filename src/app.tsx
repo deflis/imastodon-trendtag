@@ -5,14 +5,11 @@ import { Home } from './components/home';
 import { Header } from './components/header';
 import { Footer } from './components/footer';
 
-import { get, getTestData } from './api/trend_tag';
+import { get } from './api/trend_tag';
 import { Container } from './components/bootstrap/container';
 
-declare const __PRODUCTION__: boolean
-const loadedData = __PRODUCTION__ ? get() : getTestData()
-
 window.addEventListener('DOMContentLoaded',() => {
-    loadedData.then(trendTags => ReactDOM.render(
+    get().then(trendTags => ReactDOM.render(
         <div>
             <Header updatedAt={trendTags.updatedAt} />
             <Home trendTags={ trendTags}/>

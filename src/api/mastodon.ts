@@ -17,7 +17,7 @@ export default class Mastodon {
     }
 
     static async getTrendTags(): Promise<TrendTags> {
-        const { data } = await axiosInstance.get("/api/vi/trend_tags");
+        const { data } = await axiosInstance.get("/api/v1/trend_tags");
         return data;
     }
 }
