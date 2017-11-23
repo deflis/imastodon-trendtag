@@ -13,7 +13,7 @@ export class Header extends React.Component<HeaderProps> {
         return (
             <header>
                 <NavBar theme={Theme.Dark} bg={Color.Dark} placement={NavBar.Placement.StickyTop}>
-                    <NavBar.Brand href="#">トレンドタグ</NavBar.Brand>
+                    <NavBar.Brand href="#">トレンドタグ(試験運用中)</NavBar.Brand>
                     <NavBar.Text>更新時刻: {updateTime}</NavBar.Text>
                 </NavBar>
             </header>
