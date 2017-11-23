@@ -4,11 +4,15 @@ import { Theme, Color } from './index';
 interface NavBarProps {
     theme?: Theme
     bg?: Color
+    placement?: NavBar.Placement
 }
 
 export class NavBar extends React.Component<NavBarProps> {
     render() {
         let className = "navbar";
+        if(this.props.placement) {
+            className += " " + this.props.placement;
+        }
         if (this.props.theme) {
             className += " navbar-" + this.props.theme;
         }
@@ -25,6 +29,12 @@ export class NavBar extends React.Component<NavBarProps> {
 }
 
 export module NavBar {
+    export enum Placement {
+        Default = "",
+        FixedTop = "fixed-top",
+        FixedBottom = "fixed-bottom",
+        StickyTop = "sticky-top",        
+    }
     export class Brand extends React.Component<{href: string}> {
         render() {
             return (

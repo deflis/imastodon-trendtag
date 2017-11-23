@@ -1,6 +1,6 @@
 import React from 'react';
 import { TrendTags } from '../api/trend_tag';
-import { Header } from './header';
+
 import { Tag } from './tag';
 import { Container } from './bootstrap/container';
 
@@ -18,29 +18,26 @@ export class Home extends React.Component<HomeProps> {
         )
 
         return (
-            <div>
-                <Header updatedAt={this.props.trendTags.updatedAt} />
-                <Container fluid>
-                    <Container.Row>
-                        <Container.Column option={Container.GridOption.Large}>
-                            <h2>現在のトレンドタグ(α)</h2>
-                            <Container fluid>
-                                <Container.Row>
-                                    {tags}
-                                </Container.Row>
-                            </Container>
-                        </Container.Column>
-                        <Container.Column option={Container.GridOption.Large}>
-                            <h2>現在のトレンドタグ(β)</h2>
-                            <Container fluid>
-                                <Container.Row>
-                                    {extraTags}
-                                </Container.Row>
-                            </Container>
-                        </Container.Column>
-                    </Container.Row>
-                </Container>
-            </div>
+            <Container fluid>
+                <Container.Row>
+                    <Container.Column option={Container.GridOption.Large}>
+                        <h2>現在のトレンドタグ(α)</h2>
+                        <Container fluid>
+                            <Container.Row>
+                                {tags}
+                            </Container.Row>
+                        </Container>
+                    </Container.Column>
+                    <Container.Column option={Container.GridOption.Large}>
+                        <h2>現在のトレンドタグ(β)</h2>
+                        <Container fluid>
+                            <Container.Row>
+                                {extraTags}
+                            </Container.Row>
+                        </Container>
+                    </Container.Column>
+                </Container.Row>
+            </Container>
         );
     }
 }

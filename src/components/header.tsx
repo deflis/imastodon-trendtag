@@ -4,16 +4,19 @@ import { NavBar } from './bootstrap/navbar';
 import { Theme, Color } from './bootstrap/index';
 
 export interface HeaderProps {
-    updatedAt: moment.Moment
+    updatedAt?: moment.Moment
 }
 
 export class Header extends React.Component<HeaderProps> {
     render() {
+        const updateTime = this.props.updatedAt ? this.props.updatedAt.format("LLLL") : "NULL"
         return (
-            <NavBar theme={Theme.Dark} bg={Color.Dark}>
-                <NavBar.Brand href="#">トレンドタグ</NavBar.Brand>
-                <NavBar.Text>更新時刻: {this.props.updatedAt.format("LLLL")}</NavBar.Text>
-            </NavBar>
+            <header>
+                <NavBar theme={Theme.Dark} bg={Color.Dark} placement={NavBar.Placement.StickyTop}>
+                    <NavBar.Brand href="#">トレンドタグ</NavBar.Brand>
+                    <NavBar.Text>更新時刻: {updateTime}</NavBar.Text>
+                </NavBar>
+            </header>
         );
     }
 }
