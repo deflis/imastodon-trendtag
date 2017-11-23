@@ -13,7 +13,7 @@ export class Home extends React.Component<HomeProps> {
         let tags = this.props.trendTags.tags.slice(0, 10).map(tag =>
             <Container.Column option={Container.GridOption.Small} size={6}><Tag tag={tag} /></Container.Column>
         )
-        let extraTags = this.props.trendTags.extra_tags.slice(0, 10).map(tag =>
+        let extraTags = this.props.trendTags.extraTags.slice(0, 10).map(tag =>
             <Container.Column option={Container.GridOption.Small} size={6}><Tag tag={tag} /></Container.Column>
         )
 

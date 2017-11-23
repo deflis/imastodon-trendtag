@@ -3,6 +3,14 @@ import moment from "moment";
 
 import Mastodon, { TrendTags as _TrendTags } from "./mastodon"
 
+/**
+ * NGタグ（一時的なやつ）
+ */
+const NG_TAG = [
+    "test",
+    "ミリシタガシャシミュレータ",
+]
+
 export class TrendTag {
     constructor(tagName: string, score: number) {
         this.tagName = tagName
@@ -12,19 +20,22 @@ export class TrendTag {
     score: number
 }
 
+function createArray(score: { [tag: string]: number }) {
+    return Object.keys(score)
+        .map(tag => new TrendTag(tag, score[tag]))
+        .filter(tag => NG_TAG.every(ng => ng != tag.tagName))
+        .sort((tag1, tag2) => tag2.score - tag1.score);
+}
+
 export class TrendTags {
     constructor(trendTags: _TrendTags) {
         this.updatedAt = moment(trendTags.updated_at);
-        this.tags = Object.keys(trendTags.score)
-            .map(key => new TrendTag(key, trendTags.score[key]))
-            .sort((tag1, tag2) => tag2.score - tag1.score);
-        this.extra_tags = Object.keys(trendTags.score_ex)
-            .map(key => new TrendTag(key, trendTags.score_ex[key]))
-            .sort((tag1, tag2) => tag2.score - tag1.score);
+        this.tags = createArray(trendTags.score)
+        this.extraTags = createArray(trendTags.score)
     }
     updatedAt: moment.Moment
     tags: TrendTag[]
-    extra_tags: TrendTag[]
+    extraTags: TrendTag[]
 }
 
 /**
