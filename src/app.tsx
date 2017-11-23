@@ -1,13 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { Home } from './components/home.tsx';
+import { Home } from './components/home';
 
-import { get } from './api/trend_tag';
+import { get, getTestData } from './api/trend_tag';
 
-(async function() {
-    ReactDOM.render(
-        <Home trendTags={await get()}/>,
+declare const PRODUCTION: boolean
+const loadedData = PRODUCTION ? get() : getTestData()
+
+window.addEventListener('DOMContentLoaded',() => {
+    loadedData.then(trendTags => ReactDOM.render(
+        <Home trendTags={ trendTags}/>,
         document.getElementById('app')
-    );
-})();
+    )).catch(e => {
+        console.error(e)
+        ReactDOM.render(
+            <div>アイマストドンが落ちているようです？</div>,
+            document.getElementById('app')
+        );
+    });
+});

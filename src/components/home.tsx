@@ -1,7 +1,8 @@
 import React from 'react';
 import { TrendTags } from '../api/trend_tag';
-import { Header } from './header.tsx';
-import { Tag } from './tag.tsx';
+import { Header } from './header';
+import { Tag } from './tag';
+import { Container } from './bootstrap/container';
 
 export interface HomeProps {
     trendTags: TrendTags
@@ -9,12 +10,36 @@ export interface HomeProps {
 
 export class Home extends React.Component<HomeProps> {
     render() {
-        let child = this.props.trendTags.tags.map(x => <Tag tag={x} />)
+        let tags = this.props.trendTags.tags.slice(0, 10).map(tag =>
+            <Container.Column option={Container.GridOption.Small} size={6}><Tag tag={tag} /></Container.Column>
+        )
+        let extraTags = this.props.trendTags.extra_tags.slice(0, 10).map(tag =>
+            <Container.Column option={Container.GridOption.Small} size={6}><Tag tag={tag} /></Container.Column>
+        )
 
         return (
             <div>
                 <Header updatedAt={this.props.trendTags.updatedAt} />
-                {child}
+                <Container fluid>
+                    <Container.Row>
+                        <Container.Column option={Container.GridOption.Large}>
+                            <h2>現在のトレンドタグ(α)</h2>
+                            <Container fluid>
+                                <Container.Row>
+                                    {tags}
+                                </Container.Row>
+                            </Container>
+                        </Container.Column>
+                        <Container.Column option={Container.GridOption.Large}>
+                            <h2>現在のトレンドタグ(β)</h2>
+                            <Container fluid>
+                                <Container.Row>
+                                    {extraTags}
+                                </Container.Row>
+                            </Container>
+                        </Container.Column>
+                    </Container.Row>
+                </Container>
             </div>
         );
     }

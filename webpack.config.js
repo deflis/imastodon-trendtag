@@ -1,20 +1,38 @@
 const webpack = require("webpack");
 const path = require("path");
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin3');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 if (!process.env.NODE_ENV) {
     process.env.NODE_ENV = "dev"
 }
 
+const titleExt = process.env.NODE_ENV == "production" ? "" : `(${process.env.NODE_ENV})`;
+
+const commonPligin = [
+    // Ignore all locale files of moment.js
+    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+    new HtmlWebpackPlugin({
+        title: `トレンドタグ${titleExt}`,
+        filename: 'index.html',
+        template: 'src/index.ejs'
+    }),
+    new webpack.DefinePlugin({
+        __PRODUCTION__: JSON.stringify(process.env.NODE_ENV == "production"),
+        'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+    }),
+];
+
 const config = {
-    entry: {
-        "app": "./src/index.ts",
-    },
+    entry: [
+        'webpack-dev-server/client?http://localhost:8080',
+        'webpack/hot/only-dev-server',
+        './src/index.ts',
+    ],
     output: {
         filename: "bundle.js",
-        publicPath: "./",
-        path: path.resolve(process.cwd() + "/docs")
+        publicPath: "/",
+        path: path.resolve(process.cwd() + "/docs_dev")
     },
     devtool: "source-map",
     module: {
@@ -56,7 +74,12 @@ const config = {
                 test: /\.s[ac]ss$/,
                 use: [
                     { loader: "style-loader" },
-                    { loader: "css-loader" },
+                    {
+                        loader: "css-loader",
+                        options: {
+                            minimize: true
+                        }
+                    },
                     { loader: "sass-loader" }
                 ],
             },
@@ -64,7 +87,12 @@ const config = {
                 test: /\.css$/,
                 use: [
                     { loader: "style-loader" },
-                    { loader: "css-loader" }
+                    {
+                        loader: "css-loader",
+                        options: {
+                            minimize: true
+                        }
+                    },
                 ],
             },
             {
@@ -82,52 +110,46 @@ const config = {
             {
                 test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
                 loader: 'url?limit=10000&mimetype=image/svg+xml'
-            }
+            },
+            {
+                test: /\.html$/,
+                loader: "file?name=[name].[ext]",
+            },
         ]
     },
     resolve: {
         // Add '.ts' and '.tsx' as resolvable extensions.
-        extensions: [".ts", ".vue", ".js", ".json"]
+        extensions: [".ts", ".tsx", ".js", ".json"]
     },
-    plugins: [
-        new HtmlWebpackPlugin({
-            title: `トレンドタグ(${process.env.NODE_ENV})`,
-            filename: 'index.html',
-            template: 'src/index.ejs'
-        }),
-        new webpack.DefinePlugin({
-            PRODUCTION: JSON.stringify(process.env.NODE_ENV == "production"),
-            'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
-        }),
+    plugins: commonPligin.concat([
+        new webpack.NamedModulesPlugin(),
+        new webpack.HotModuleReplacementPlugin(),
         new webpack.LoaderOptionsPlugin({
             minimize: false,
             debug: true
         }),
-        new webpack.HotModuleReplacementPlugin()
-    ],
+    ]),
     devServer: {
-        contentBase: path.join(__dirname, "dist"),
+        contentBase: path.join(__dirname, "docs"),
         compress: true,
         port: 8080,
         hot: true,
         historyApiFallback: true,
+        inline: true,
     }
 };
 
 if (process.env.NODE_ENV == "production") {
+    config.entry = {
+        "app": './src/index.ts',
+    };
+    config.output.publicPath = "./";
+    config.output.path = path.resolve(process.cwd() + "/docs");
     config.devtool = false;
-    config.plugins = [
-        new HtmlWebpackPlugin({
-            title: 'トレンドタグ',
-            filename: 'index.html',
-            template: 'src/index.ejs'
-        }),
-        new webpack.DefinePlugin({
-             'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
-        }),
+    config.plugins = commonPligin.concat([
         new webpack.LoaderOptionsPlugin({
             minimize: false,
-            debug: false
+            debug: false,
         }),
         new UglifyJSPlugin({
             sourceMap: config.devtool && (config.devtool.indexOf("sourcemap") >= 0 || config.devtool.indexOf("source-map") >= 0),
@@ -138,7 +160,7 @@ if (process.env.NODE_ENV == "production") {
                 },
             }
         }),
-    ]
+    ])
 }
 
 module.exports = config;

@@ -3,10 +3,8 @@
     "version": "1.0.0",
     "main": "index.js",
     "license": "MIT",
+    "private": true,
     "dependencies": {
-        "@types/emojione": "^2.2.1",
-        "@types/react": "^15.6.6",
-        "@types/react-dom": "^16.0.2",
         "axios": "^0.16.2",
         "bootstrap": "^4.0.0-alpha.6",
         "emojione": "2.2.7",
@@ -15,8 +13,12 @@
         "react-dom": "^16.0.0"
     },
     "devDependencies": {
+        "@types/emojione": "^2.2.1",
+        "@types/react": "^15.6.6",
+        "@types/react-dom": "^16.0.2",
         "buble-loader": "^0.4.1",
         "css-loader": "^0.28.4",
+        "html-webpack-plugin": "^2.29.0",
         "node-sass": "^4.5.3",
         "npm-run-all": "^4.0.2",
         "sass-loader": "^6.0.6",
@@ -24,17 +26,17 @@
         "style-loader": "^0.18.2",
         "ts-loader": "^2.3.1",
         "typescript": "^2.4.1",
-        "html-webpack-plugin": "^2.29.0",
-        "uglifyjs-webpack-plugin3": "^1.0.0-beta",
+        "uglifyjs-webpack-plugin": "1.0.0",
         "webpack": "^3.3.0",
         "webpack-dev-server": "^2.6.1"
     },
     "scripts": {
+        "start": "npm-run-all build watch",
         "build": "npm-run-all build:webpack",
         "build:webpack": "webpack --config webpack.config.js",
         "watch": "npm-run-all watch:serve",
         "watch:webpack": "webpack --config webpack.config.js -w",
         "watch:serve": "webpack-dev-server --config webpack.config.js",
-        "publish:build": "NODE_ENV=production webpack --config webpack.config.js"
+        "publish": "NODE_ENV=production npm-run-all build"
     }
 }

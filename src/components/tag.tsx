@@ -1,5 +1,8 @@
 import React from 'react';
 import { TrendTag } from '../api/trend_tag';
+import { ButtonLink } from './bootstrap/button';
+import { Color } from './bootstrap/index';
+import { Card } from './bootstrap/card';
 
 export interface TagProps {
     tag: TrendTag
@@ -7,14 +10,18 @@ export interface TagProps {
 
 export class Tag extends React.Component<TagProps> {
     render() {
+        let shortTagName = this.props.tag.tagName.length > 12 ? this.props.tag.tagName.substring(0, 10) + "..." : this.props.tag.tagName;
         return (
-            <div className="card">
-                <div className="card-body">
-                    <h4 className="card-title">#{this.props.tag.tag}</h4>
-                    <p className="card-text">スコア: {this.props.tag.score}</p>
-                    <a href="#" className="btn btn-primary">Show #{this.props.tag.tag}</a>
-                </div>
-            </div>
+            <Card>
+                <Card.Title>#{this.props.tag.tagName}</Card.Title>
+                <Card.Text>スコア: {this.props.tag.score}</Card.Text>
+                <ButtonLink color={Color.Primary} href={`https://imastodon.net/web/timelines/tag/${this.props.tag.tagName}`}>
+                    Show #{shortTagName}
+                </ButtonLink>
+                <ButtonLink color={Color.Secondary} href={`https://imastodon.net/tags/${this.props.tag.tagName}`}>
+                    Tag view #{shortTagName}
+                </ButtonLink>
+            </Card>
         );
     }
 }
