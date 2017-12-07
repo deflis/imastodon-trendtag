@@ -11,28 +11,16 @@ export interface HomeProps {
 export class Home extends React.Component<HomeProps> {
     render() {
         let tags = this.props.trendTags.tags.slice(0, 10).map(tag =>
-            <Container.Column option={Container.GridOption.Small} size={6}><Tag tag={tag} /></Container.Column>
+            <Container.Column option={Container.GridOption.Small} size={3}><Tag tag={tag} /></Container.Column>
         )
-        let extraTags = this.props.trendTags.extraTags.slice(0, 10).map(tag =>
-            <Container.Column option={Container.GridOption.Small} size={6}><Tag tag={tag} /></Container.Column>
-        )
-
         return (
             <Container fluid>
                 <Container.Row>
                     <Container.Column option={Container.GridOption.Large}>
-                        <h2>現在のトレンドタグ(α)</h2>
+                        <h2>現在のトレンドタグ</h2>
                         <Container fluid>
                             <Container.Row>
                                 {tags}
-                            </Container.Row>
-                        </Container>
-                    </Container.Column>
-                    <Container.Column option={Container.GridOption.Large}>
-                        <h2>現在のトレンドタグ(β)</h2>
-                        <Container fluid>
-                            <Container.Row>
-                                {extraTags}
                             </Container.Row>
                         </Container>
                     </Container.Column>

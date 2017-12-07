@@ -3,7 +3,7 @@ import axios from 'axios'
 export interface TrendTags {
     updated_at: string
     score: {[tag: string]: number}
-    score_ex: {[tag: string]: number}
+    //score_ex: {[tag: string]: number}
 }
 
 const axiosInstance = axios.create({

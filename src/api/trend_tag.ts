@@ -6,9 +6,8 @@ import Mastodon, { TrendTags as _TrendTags } from "./mastodon"
 /**
  * NGタグ（一時的なやつ）
  */
-const NG_TAG = [
+const NG_TAG: string[] = [
     "test",
-    "ミリシタガシャシミュレータ",
 ]
 
 export class TrendTag {
@@ -31,7 +30,7 @@ export class TrendTags {
     constructor(trendTags: _TrendTags) {
         this.updatedAt = moment(trendTags.updated_at);
         this.tags = createArray(trendTags.score)
-        this.extraTags = createArray(trendTags.score_ex)
+        //this.extraTags = createArray(trendTags.score_ex)
     }
     updatedAt: moment.Moment
     tags: TrendTag[]
